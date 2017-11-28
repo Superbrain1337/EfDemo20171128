@@ -1,0 +1,76 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp28
+{
+	class Program
+	{
+		static void Main(string[] args)
+		{
+			Console.ReadLine();
+			Console.WriteLine("Skapar context");
+			LeksaksContext context = new LeksaksContext();
+			Console.WriteLine("Kör query");
+			var query = from x in context.Leksaker
+						select x.Name;
+			Console.WriteLine("Vad finns i databasen?");
+			foreach(var namn in query)
+				Console.WriteLine($"Leksak: {namn}");
+			Console.WriteLine("Alla leksaker utskrivna.");
+
+			var query2 = (from x in context.Leksaker
+						 select x.Tillverkare.Namn).First();
+			Console.WriteLine("Första leksaken är tillverkad av: " + query2);
+
+			AddStuff(context);
+
+			Console.ReadLine();
+		}
+		private static void AddStuff(LeksaksContext context)
+		{
+			Tillverkare t = new Tillverkare();
+			t.Namn = "Mulle Meck";
+			t.Leksaker = new List<Leksak>();
+
+			Leksak le = new Leksak();
+			le.Name = "flygplan";
+			le.MinstaÅlder = 5;
+			le.Pris = 50000;
+			le.Tillverkare = t;
+
+			t.Leksaker.Add(le);
+			context.Tillverkare.Add(t);
+			context.SaveChanges();
+		}
+	}
+
+	public class LeksaksContext : DbContext
+	{
+		private const string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=EntityFrameworkDemo20171128;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+		public LeksaksContext() : base(connectionString) { }
+		public DbSet<Leksak> Leksaker { get; set; }
+		public DbSet<Tillverkare> Tillverkare { get; set; }
+	}
+
+	public class Leksak
+	{
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public int MinstaÅlder { get; set; }
+		public decimal Pris { get; set; }
+		// en tillverkare
+		public virtual Tillverkare Tillverkare { get; set; }
+	}
+	public class Tillverkare
+	{
+		public int TillverkareId { get; set; }
+		public string Namn { get; set; }
+		// alla leksaker som man tillverkar
+		public virtual IList<Leksak> Leksaker { get; set; }
+	}
+
+}
