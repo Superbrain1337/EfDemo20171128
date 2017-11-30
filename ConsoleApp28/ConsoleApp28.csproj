@@ -49,12 +49,50 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Migrations\201711280845049_InitialCreate.cs" />
+    <Compile Include="Migrations\201711280845049_InitialCreate.Designer.cs">
+      <DependentUpon>201711280845049_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711300850264_Age  from int to float.cs" />
+    <Compile Include="Migrations\201711300850264_Age  from int to float.Designer.cs">
+      <DependentUpon>201711300850264_Age  from int to float.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711301240302_Annotation table.cs" />
+    <Compile Include="Migrations\201711301240302_Annotation table.Designer.cs">
+      <DependentUpon>201711301240302_Annotation table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711301254050_Annotations exempel.cs" />
+    <Compile Include="Migrations\201711301254050_Annotations exempel.Designer.cs">
+      <DependentUpon>201711301254050_Annotations exempel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711301259043_Annotations string length.cs" />
+    <Compile Include="Migrations\201711301259043_Annotations string length.Designer.cs">
+      <DependentUpon>201711301259043_Annotations string length.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201711280845049_InitialCreate.resx">
+      <DependentUpon>201711280845049_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711300850264_Age  from int to float.resx">
+      <DependentUpon>201711300850264_Age  from int to float.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711301240302_Annotation table.resx">
+      <DependentUpon>201711301240302_Annotation table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711301254050_Annotations exempel.resx">
+      <DependentUpon>201711301254050_Annotations exempel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711301259043_Annotations string length.resx">
+      <DependentUpon>201711301259043_Annotations string length.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

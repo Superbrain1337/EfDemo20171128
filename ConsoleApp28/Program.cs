@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
@@ -18,15 +20,16 @@ namespace ConsoleApp28
 			var query = from x in context.Leksaker
 						select x.Name;
 			Console.WriteLine("Vad finns i databasen?");
-			foreach(var namn in query)
+			foreach (var namn in query)
 				Console.WriteLine($"Leksak: {namn}");
 			Console.WriteLine("Alla leksaker utskrivna.");
 
 			var query2 = (from x in context.Leksaker
-						 select x.Tillverkare.Namn).First();
+						  select x.Tillverkare.Namn).First();
 			Console.WriteLine("Första leksaken är tillverkad av: " + query2);
 
 			AddStuff(context);
+
 
 			Console.ReadLine();
 		}
@@ -59,17 +62,35 @@ namespace ConsoleApp28
 	public class Leksak
 	{
 		public int Id { get; set; }
+
+		[Column("Namn", TypeName = "nvarchar")]
+		[StringLength(50)]
 		public string Name { get; set; }
-		public int MinstaÅlder { get; set; }
+
+		public float MinstaÅlder { get; set; }
+
 		public decimal Pris { get; set; }
+
 		// en tillverkare
+		public int TillverkareIdFK { get; set; }
+
+		[ForeignKey("TillverkareIdFK")]
 		public virtual Tillverkare Tillverkare { get; set; }
+
+		[NotMapped]
+		public bool Igelkott { get; set; }
 	}
+	[Table("TillverkareUtanS")]
 	public class Tillverkare
 	{
+		[Key]
 		public int TillverkareId { get; set; }
+
+		[Required]
 		public string Namn { get; set; }
+
 		// alla leksaker som man tillverkar
+		[Required]
 		public virtual IList<Leksak> Leksaker { get; set; }
 	}
 
